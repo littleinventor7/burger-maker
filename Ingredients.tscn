@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://fo1e2v3ushtb"]
+
+[ext_resource type="Script" uid="uid://d01xj2nvbl5xc" path="res://ingredients.gd" id="1_t0dxm"]
+[ext_resource type="Texture2D" uid="uid://nrae1m6rrx0t" path="res://images/lettuce.png" id="2_fjme3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elkol"]
+size = Vector2(164.75, 68.75)
+
+[node name="Ingredient" type="Area2D" groups=["ingredient"]]
+script = ExtResource("1_t0dxm")
+minspeed = 149
+maxspeed = 200
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 511)
+scale = Vector2(0.407708, 0.407708)
+texture = ExtResource("2_fjme3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.375, 512.375)
+shape = SubResource("RectangleShape2D_elkol")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

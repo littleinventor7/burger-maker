@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwcdyvhw13be3"]
+
+[ext_resource type="Script" uid="uid://dmag7gnrji77n" path="res://player.gd" id="1_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://dby4vgq5ecfop" path="res://images/download (2).jpg" id="1_7mycd"]
+[ext_resource type="Texture2D" uid="uid://llseqw033i15" path="res://images/burger bred bottom.png" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://fo1e2v3ushtb" path="res://Ingredients.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://32be4vhyqf71" path="res://spawner.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dp77x4f466fs5" path="res://deathzone.gd" id="5_lquwl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(154, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(90.5, 659)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1bvp3"]
+size = Vector2(27, 650)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(1247.5, 68)
+
+[node name="Node" type="Node"]
+
+[node name="Download(2)" type="Sprite2D" parent="."]
+visibility_layer = 769
+z_index = -1
+z_as_relative = false
+position = Vector2(597, 319)
+scale = Vector2(5.24779, 2.92825)
+texture = ExtResource("1_7mycd")
+
+[node name="player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+position = Vector2(142, 597)
+scale = Vector2(0.430417, 0.430417)
+texture = ExtResource("1_ig7tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(144, 597)
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="GameTimer" type="Timer" parent="player"]
+wait_time = 90.0
+autostart = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1190, 319)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(3.5, 315)
+shape = SubResource("RectangleShape2D_1bvp3")
+
+[node name="Ingredient" parent="." instance=ExtResource("3_h2yge")]
+position = Vector2(361, -443)
+
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("4_1bvp3")
+ingredient_scene = ExtResource("3_h2yge")
+
+[node name="SpawnTimer" type="Timer" parent="Spawner"]
+
+[node name="deathzone" type="Area2D" parent="."]
+position = Vector2(367, 779)
+script = ExtResource("5_lquwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deathzone"]
+position = Vector2(247.25, -99)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[connection signal="timeout" from="player/GameTimer" to="player" method="_on_timer_timeout"]
+[connection signal="timeout" from="Spawner/SpawnTimer" to="Spawner" method="_on_spawn_timer_timeout"]
+[connection signal="body_entered" from="deathzone" to="deathzone" method="_on_body_entered"]

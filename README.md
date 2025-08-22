@@ -1,4 +1,4 @@
-# 🍔 Burger Stack — Falling Ingredients Game
+# 🍔 Burger Maker — Falling Ingredients Game
 
 *A tiny arcade-style game where burger ingredients fall from the top of the screen and you stack them to build the tallest (and tastiest) burger!*
 
